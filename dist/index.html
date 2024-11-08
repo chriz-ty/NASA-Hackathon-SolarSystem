@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+  <title>Xplorers</title>
+
+  <style>html, body {
+  color: #fff;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: Montserrat;
+  overflow: hidden;
+}
+
+#outerspace {
+  width: 100vw;
+  height: 100vh;
+  display: block;
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+
+.content {
+  text-align: center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.title {
+  margin-bottom: 10px;
+  font-size: 7rem;
+  font-weight: 700;
+}
+
+.subtitle {
+  color: #777676;
+  margin-bottom: 30px;
+  font-size: 2.5rem;
+  font-weight: 100;
+}
+
+.button {
+  color: #fff;
+  cursor: pointer;
+  background-color: #ff6200;
+  border: none;
+  border-radius: 5px;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 20px;
+  font-size: 1.2rem;
+  transition: all .3s;
+  display: inline-flex;
+  position: relative;
+  overflow: hidden;
+}
+
+.button .text {
+  transition: transform .3s;
+}
+
+.button .arrow {
+  font-size: 1.5rem;
+  transition: transform .3s;
+  transform: translateX(-10px);
+}
+
+.button:hover .text {
+  transform: translateX(-10px);
+}
+
+.button:hover .arrow {
+  transform: translateX(10px);
+}
+
+.button:hover {
+  background-color: #ff8533;
+}
+</style>
+</head>
+
+<body>
+  <canvas id="outerspace"></canvas>
+
+  <div class="content">
+    <div class="title">Xplorers</div>
+    <div class="subtitle">Exploring Beyond, Innovating for Tomorrow</div>
+    <a href="/landing.html"><button class="button">
+      <span class="text">Move to Our Galaxy</span>
+      <span class="arrow">→</span>
+    </button></a>
+  </div>
+
+  <script>let outerspace = document.querySelector("#outerspace");
+let mainContext = outerspace.getContext("2d");
+function resizeCanvas() {
+    outerspace.width = window.innerWidth;
+    outerspace.height = window.innerHeight;
+}
+window.addEventListener("resize", resizeCanvas);
+resizeCanvas(); // Set initial size
+let canvasWidth = outerspace.width;
+let canvasHeight = outerspace.height;
+let centerX = canvasWidth * 0.5;
+let centerY = canvasHeight * 0.5;
+let numberOfStars = 500;
+let stars = [];
+let frames_per_second = 60;
+let interval = Math.floor(1000 / frames_per_second);
+let previousTime = performance.now();
+let scrollSpeed = 1; // Default speed for star movement
+class Star {
+    constructor(){
+        this.reset();
+    }
+    reset() {
+        this.x = getRandomInt(-centerX, centerX);
+        this.y = getRandomInt(-centerY, centerY);
+        this.radiusMax = getRandomInt(1, 10);
+        this.speed = getRandomInt(1, 5);
+        this.counter = canvasWidth;
+    }
+    drawStar() {
+        this.counter -= this.speed * scrollSpeed; // Adjust speed based on scroll
+        if (this.counter < 1) this.reset();
+        let xRatio = this.x / this.counter;
+        let yRatio = this.y / this.counter;
+        let starX = remap(xRatio, 0, 1, 0, canvasWidth);
+        let starY = remap(yRatio, 0, 1, 0, canvasHeight);
+        this.radius = remap(this.counter, 0, canvasWidth, this.radiusMax, 0);
+        mainContext.beginPath();
+        mainContext.arc(starX, starY, this.radius, 0, Math.PI * 2, false);
+        mainContext.closePath();
+        mainContext.fillStyle = "#FFF";
+        mainContext.fill();
+    }
+}
+function setup() {
+    for(let i = 0; i < numberOfStars; i++){
+        let star = new Star();
+        stars.push(star);
+    }
+}
+setup();
+function animate(timestamp) {
+    canvasWidth = outerspace.width;
+    canvasHeight = outerspace.height;
+    centerX = canvasWidth * 0.5;
+    centerY = canvasHeight * 0.5;
+    let currentTime = timestamp;
+    let deltaTime = currentTime - previousTime;
+    if (deltaTime > interval) {
+        previousTime = currentTime - deltaTime % interval;
+        mainContext.clearRect(0, 0, canvasWidth, canvasHeight);
+        mainContext.fillStyle = "#111";
+        mainContext.fillRect(0, 0, canvasWidth, canvasHeight);
+        mainContext.save();
+        mainContext.translate(centerX, centerY);
+        for(let i = 0; i < stars.length; i++)stars[i].drawStar();
+        mainContext.restore();
+    }
+    requestAnimationFrame(animate);
+}
+requestAnimationFrame(animate);
+function getRandomInt(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+function remap(value, istart, istop, ostart, ostop) {
+    return ostart + (ostop - ostart) * ((value - istart) / (istop - istart));
+}
+// Scroll event listener
+window.addEventListener("scroll", function() {
+    // Calculate scroll speed based on scroll position
+    let scrollPos = window.scrollY || window.pageYOffset;
+    scrollSpeed = 1 + scrollPos / 1000; // Adjust this factor to change sensitivity
+});
+
+</script>
+
+<script src="/solarsystem-main.59712999.js"></script></body>
+
+</html>

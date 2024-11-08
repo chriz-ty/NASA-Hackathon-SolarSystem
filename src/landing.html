@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solar System</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: black;
+        }
+
+        /* Preloader Styles */
+        #preloader {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #000;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-family: Arial, sans-serif;
+            font-size: 24px;
+            z-index: 9999;
+            transition: opacity 0.5s ease; /* Smooth fade-out effect */
+        }
+
+        #preloader.hidden {
+            opacity: 0; /* Fades out the preloader */
+        }
+
+        #preloader.hidden-complete {
+            display: none; /* Completely hides the preloader after the fade-out */
+        }
+
+        /* Loader animation */
+        .loader {
+            height: 40px;
+            width: 40px;
+            border-radius: 50%;
+            box-shadow: inset 0 0 0 #0a7cbe;
+            animation: load 5s linear infinite alternate;
+            margin-bottom: 20px;
+        }
+
+        @keyframes load {
+            0% {
+                box-shadow: inset -20px 40px 0 #0a7cbe;
+            }
+            100% {
+                box-shadow: inset 20px -40px 0 #0a7cbe;
+            }
+        }
+
+        /* Floating text effect */
+        .floating-text span {
+            display: inline-block;
+            animation: float 2s ease-in-out infinite;
+        }
+
+        /* Floating animation */
+        @keyframes float {
+            0% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+            100% {
+                transform: translateY(0);
+            }
+        }
+
+        /* Adding delay to each letter */
+        .floating-text span:nth-child(1) { animation-delay: 0s; }
+        .floating-text span:nth-child(2) { animation-delay: 0.1s; }
+        .floating-text span:nth-child(3) { animation-delay: 0.2s; }
+        .floating-text span:nth-child(4) { animation-delay: 0.3s; }
+        .floating-text span:nth-child(5) { animation-delay: 0.4s; }
+        .floating-text span:nth-child(6) { animation-delay: 0.5s; }
+        .floating-text span:nth-child(7) { animation-delay: 0.6s; }
+        .floating-text span:nth-child(8) { animation-delay: 0.7s; }
+        .floating-text span:nth-child(9) { animation-delay: 0.8s; }
+        .floating-text span:nth-child(10) { animation-delay: 0.9s; }
+        .floating-text span:nth-child(11) { animation-delay: 1s; }
+        .floating-text span:nth-child(12) { animation-delay: 1.1s; }
+        .floating-text span:nth-child(13) { animation-delay: 1.2s; }
+        .floating-text span:nth-child(14) { animation-delay: 1.3s; }
+        .floating-text span:nth-child(15) { animation-delay: 1.4s; }
+        .floating-text span:nth-child(16) { animation-delay: 1.5s; }
+        .floating-text span:nth-child(17) { animation-delay: 1.6s; }
+        .floating-text span:nth-child(18) { animation-delay: 1.7s; }
+        .floating-text span:nth-child(19) { animation-delay: 1.8s; }
+    </style>
+</head>
+<body>
+    <!-- Preloader -->
+    <div id="preloader">
+        <div class="loader"></div>
+        <div class="floating-text">
+            <!-- Split the text into individual spans for floating animation -->
+            <span>L</span><span>o</span><span>a</span><span>d</span><span>i</span><span>n</span><span>g</span> 
+            <span>S</span><span>o</span><span>l</span><span>a</span><span>r</span> 
+            <span>S</span><span>y</span><span>s</span><span>t</span><span>e</span><span>m</span><span>.</span>
+        </div>
+    </div>
+     <!-- Main script -->
+    <script src="./js/scripts.js" type="module"></script>
+   
+    <script>
+        // Set a timeout to delay the hiding of the preloader
+        window.addEventListener('load', function () {
+            const preloader = document.getElementById('preloader');
+            
+            // Fade out after 4 seconds
+            setTimeout(() => {
+                preloader.classList.add('hidden');
+                
+                // Completely hide preloader after fade-out
+                setTimeout(() => {
+                    preloader.classList.add('hidden-complete');
+                }, 500); // Wait for fade-out (0.5 seconds)
+            }, 4000); // Keeps the preloader for 4 seconds
+        });
+        // Get the button element
+
+
+    </script>
+</body>
+</html>
